@@ -14,7 +14,7 @@ export default class Chat extends React.Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: this.props.navigation.state.params.backgroundColor,
+          backgroundColor: this.props.navigation.state.params.colorBackground,
         }}
       >
         <Text>Chat Box</Text>
