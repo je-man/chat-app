@@ -27,7 +27,7 @@ export default class Screen1 extends React.Component {
               placeholder='Your Name'
            />
           </View>
-          <Text>Choose Background Color</Text>
+          <Text style={styles.titleChoose}>Choose Background Color</Text>
           <View style={styles.backgroundColor}>
              <TouchableOpacity
                 onPress={() => this.setState({ colorBackground: "#090C08" })}
@@ -56,7 +56,7 @@ export default class Screen1 extends React.Component {
           <View style={styles.button}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Chat', {
-                user: this.state.userName,
+                userName: this.state.userName,
                 backgroundColor: this.state.colorBackground,
               })}
               >
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
  },
 
  box: {
-   marginTop: 200,
+   marginTop: 280,
    width: '90%',
    height: '40%',
    padding: 10,
@@ -102,9 +102,8 @@ const styles = StyleSheet.create({
   fontWeight: "600",
   color: '#FFFFFF',
   backgroundColor: '#757083',
-  width: '88%',
   alignItems: 'center',
-  width: '88%',
+  width: '98%',
   height: '18%',
   marginBottom: '5%',
  },
@@ -126,36 +125,42 @@ const styles = StyleSheet.create({
   justifyContent: 'space-around',
   paddingLeft: 16,
   marginTop: '2%',
-},
+ },
 
-colorButton: {
-  height: 50,
-  width: 50,
-  borderRadius: 25,
-  margin: 10,
-},
+  colorButton: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    margin: 10,
+  },
 
-buttonText: {
-  fontSize: 16,
-  fontWeight: '700',
-  color: '#FFFFFF',
-  // marginTop: 16,
-  textAlign: 'center',
-  padding: 10,
-},
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    // marginTop: 16,
+    textAlign: 'center',
+    padding: 10,
+  },
 
-color1: {
-  backgroundColor: "#090C08",
-},
-color2: {
-  backgroundColor: "#474056",
-},
-color3: {
-  backgroundColor: "#8A95A5",
-},
-color4: {
-  backgroundColor: "#B9C6AE",
-},
+  color1: {
+    backgroundColor: "#090C08",
+  },
+  color2: {
+    backgroundColor: "#474056",
+  },
+  color3: {
+    backgroundColor: "#8A95A5",
+  },
+  color4: {
+    backgroundColor: "#B9C6AE",
+  },
+
+  titleChoose: {
+    marginLeft: 20,
+    fontSize: 17
+  }
+
 
 });
 

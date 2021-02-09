@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 export default class Chat extends React.Component {
 
@@ -10,15 +10,28 @@ export default class Chat extends React.Component {
 
 
   render() {
+    let { userName, backgroundColor } = this.props.route.params; this.props.navigation.setOptions({ title: userName });
     return (
       <View
         style={{
           flex: 1,
-          backgroundColor: this.props.navigation.state.params.colorBackground,
+          backgroundColor: backgroundColor, 
         }}
       >
-        <Text>Chat Box</Text>
+        <Text style={styles.chatBox}>Chat Box</Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+ chatBox: {
+   color: 'white',
+   fontSize: 25,
+   textAlign: 'center',
+   marginBottom: 150
+ }
+ 
+ });
+ 
+ 
