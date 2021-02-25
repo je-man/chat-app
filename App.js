@@ -8,8 +8,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 
- // Create the navigator
- const Stack = createStackNavigator();
+// Create the navigator
+const Stack = createStackNavigator();
 
 export default class App extends React.Component {
 
