@@ -34,8 +34,8 @@ export default class Chat extends React.Component {
 
   componentDidMount() {
     
-    // creating a references to shoppinglists collection
-    this.referenceShoppingLists = firebase.firestore().collection('messages');
+    // creating a references to messages collection
+    this.referenceMessages = firebase.firestore().collection('messages');
 
     const {route, navigation} = this.props; let { userName } = route.params; navigation.setOptions({ title: userName });
 
