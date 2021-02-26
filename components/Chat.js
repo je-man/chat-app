@@ -27,9 +27,6 @@ export default class Chat extends React.Component {
     firebase.initializeApp(firebaseConfig);
     }
 
-    this.referenceMessages = firebase.firestore().collection('messages');
-
-
   }
 
   componentDidMount() {
@@ -46,13 +43,13 @@ export default class Chat extends React.Component {
     
       //update user state with currently active user data
       this.setState({
-        uid: user.uid,
+        uid: user._id,
         messages: [],
       });
+
+      this.unsubscribe = this.ReferenceMessages.onSnapshot(this.onCollectionUpdate)
+
     });
-
-    this.unsubscribe = this.messages.onSnapshot(this.onCollectionUpdate)
-
   }
 
   componentWillUnmount() {
