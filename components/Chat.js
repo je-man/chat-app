@@ -47,7 +47,7 @@ export default class Chat extends React.Component {
         messages: [],
       });
 
-      this.unsubscribe = this.ReferenceMessages.onSnapshot(this.onCollectionUpdate)
+      this.unsubscribe = this.referenceMessages.onSnapshot(this.onCollectionUpdate)
 
     });
   }
