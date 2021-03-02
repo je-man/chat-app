@@ -37,7 +37,7 @@ export default class Chat extends React.Component {
     this.referenceMessages = firebase.firestore().collection('messages');
 
     const {route, navigation} = this.props; let { userName } = route.params; navigation.setOptions({ title: userName });
-
+    
     NetInfo.fetch().then(connection => {
       if (connection.isConnected) {
         this.authUnsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
