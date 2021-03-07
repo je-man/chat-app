@@ -1,8 +1,10 @@
 import React from "react";
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
-import { View, Platform, KeyboardAvoidingView, Text, StyleSheet } from "react-native";
+import { View, Platform, KeyboardAvoidingView, Text, StyleSheet, Image } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
  //import Firestore database
  const firebase = require('firebase');
@@ -164,6 +166,7 @@ export default class Chat extends React.Component {
     )
   }
 
+  //removes toolbar if internet is not detected
   renderInputToolbar(props) {
     if (this.state.isConnected == false) {
     } else {
@@ -173,6 +176,33 @@ export default class Chat extends React.Component {
         />
       );
     }
+  }
+
+  //a (+) button 
+  renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
+
+  //check if message contains location data
+  renderCustomView (props) {
+    const { currentMessage} = props;
+    if (currentMessage.location) {
+      return (
+          <MapView
+            style={{width: 150,
+              height: 100,
+              borderRadius: 13,
+              margin: 3}}
+            region={{
+              latitude: currentMessage.location.latitude,
+              longitude: currentMessage.location.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+      );
+    }
+    return null;
   }
 
 
@@ -186,9 +216,17 @@ export default class Chat extends React.Component {
         }}
       >
         <Text style={styles.chatBox}>Chat Box</Text>
+        {this.state.image && (
+          <Image
+            source={{ uri: this.state.image.uri }}
+            style={{ width: 200, height: 200 }}
+          />
+        )}
 
         <GiftedChat
         renderBubble={this.renderBubble.bind(this)}
+        renderCustomView={this.renderCustomView}
+        renderActions={this.renderCustomActions}
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{
