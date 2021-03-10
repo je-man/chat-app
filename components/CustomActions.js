@@ -9,49 +9,76 @@ import firebase from 'firebase';
 
 export default class CustomActions extends React.Component {
 
+  constructor() {
+    super()
+  }
 
   //pick a photo(s) from your gallery
   pickImage = async () => {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status === 'granted') {
-      let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: 'Images',
-      }).catch(error => console.log(error));
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
-      if (!result.cancelled) {
-          this.setState({
-          image: result
-          });
-      }
-
-      }
-  } 
-
-    //take a photo(s) using camera
-  takePhoto = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA);
     if (status === 'granted') {
-      let result = await ImagePicker.launchCameraAsync().catch(error => console.log(error));
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: 'Images',
+            });
+        } catch (err) {
+            console.log(err);
+        }
 
-      if (!result.cancelled) {
-        this.setState({
-          image: result
-        });
-      }
+        if (!result.cancelled) {
+            try {
+                const imageUrlLink = await this.uploadImage(result.uri);
+                this.props.onSend({image: imageUrlLink});
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
+ }
+  
+  //take a photo(s) using camera
+  takePhoto = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL)
+
+    if (status === 'granted') {
+        try {
+            let result = await ImagePicker.launchCameraAsync({
+                mediaTypes: 'Images',
+            });
+        } catch (err) {
+            console.log(err);
+        }
+
+        if (!result.cancelled) {
+            try {
+                const imageUrlLink = await this.uploadImage(result.uri);
+                this.props.onSend({ image: imageUrlLink });
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
   }
 
   //retrieve user's location or view user's current location
   getLocation = async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status === 'granted') {
-      let result = await Location.getCurrentPositionAsync({}).catch(error => console.log(error));
 
-      if (result) {
-        this.setState({
-          location: result
-        });
-      }
+    if (status === 'granted') {
+        try {
+            const result = await Location.getCurrentPositionAsync({});
+            if (result) {
+                this.props.onSend({
+                    location: {
+                        longitude: result.coords.longitude,
+                        latitude: result.coords.latitude,
+                    },
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
   }
 
@@ -86,29 +113,31 @@ export default class CustomActions extends React.Component {
 
 
   onActionPress = () => {
-      const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
-      const cancelButtonIndex = options.length - 1;
-      this.context.actionSheet().showActionSheetWithOptions(
+    const options = ['Choose From Library', 'Take picture', 'Share your location', 'Cancel']
+    const cancelButtonIndex = options.length - 1;
+
+    this.context.actionSheet().showActionSheetWithOptions(
         {
-          options,
-          cancelButtonIndex,
+            options,
+            cancelButtonIndex,
         },
         async (buttonIndex) => {
-          switch (buttonIndex) {
-            case 0:
-              console.log('user wants to pick an image');
-              return;
-            case 1:
-              console.log('user wants to take a photo');
-              return;
-            case 2:
-              console.log('user wants to get their location');
-            default:
-          }
+            switch (buttonIndex) {
+                case 0:
+                    this.pickImage()
+                    return;
+                case 1: 
+                    this.takePhoto()
+                    return;
+                case 2: 
+                    this.getLocation()
+                    return;
+            }
         },
-      );
+    );
   };
 
+  
   render(){
       return(
           <TouchableOpacity 
@@ -149,4 +178,6 @@ const styles = StyleSheet.create({
 CustomActions.contextTypes = {
 actionSheet: PropTypes.func,
 };
+
+
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { GiftedChat, Bubble } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat'
 import { View, Platform, KeyboardAvoidingView, Text, StyleSheet, Image } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -16,7 +16,15 @@ export default class Chat extends React.Component {
     super(props);
     this.state = {  
       messages: [],
-      uid: 0,
+      uid:'',
+      user:{
+        _id:'',
+        name: '',
+        avatar: '',
+      },
+      isConnected: false,
+      image: null,
+      location: null,
     }; 
 
     const firebaseConfig = {
@@ -77,15 +85,10 @@ export default class Chat extends React.Component {
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }), () => {
+      this.addMessages();
       this.saveMessages();
     });
   }
-
-  // onSend(messages = []) {
-  //   this.setState(previousState => ({
-  //     messages: GiftedChat.append(previousState.messages, messages),
-  //   }))
-  // }
 
   onCollectionUpdate = (querySnapshot) => {
     const messages = [];
@@ -98,6 +101,7 @@ export default class Chat extends React.Component {
         text: data.text.toString(),
         createdAt: data.createdAt.toDate(),
         image: data.image || null,
+        location: data.location || null,
         user: {
           _id: data.user._id,
           name: data.user.name,
@@ -117,7 +121,8 @@ export default class Chat extends React.Component {
       text: message.text || '',
       createdAt: message.createdAt,
       user: message.user,
-      image: message.image || '',
+      image: message.image || null,
+      location: message.location || null,
       sent: true,
     });
   };
@@ -202,7 +207,6 @@ export default class Chat extends React.Component {
           />
       );
     }
-    return null;
   }
 
 
@@ -229,6 +233,7 @@ export default class Chat extends React.Component {
         renderActions={this.renderCustomActions}
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
+        image={this.state.image}
         user={{
           _id: 1,
         }}
