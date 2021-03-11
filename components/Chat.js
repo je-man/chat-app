@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
    color: 'white',
    fontSize: 25,
    textAlign: 'center',
-   marginBottom: 150
+   marginBottom: 15,
  }
  
  });
