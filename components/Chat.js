@@ -52,7 +52,11 @@ export default class Chat extends React.Component {
       if (connection.isConnected) {
         this.authUnsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
           if (!user) {
-            await firebase.auth().signInAnonymously();
+            try {
+              await firebase.auth().signInAnonymously();
+            } catch (error) {
+              console.log(error);
+            }
           }
         
           //update user state with currently active user data
@@ -128,7 +132,7 @@ export default class Chat extends React.Component {
   };
 
   getMessages = async () => {
-    let messages = [];
+    const messages = [];
     try {
       messages = (await AsyncStorage.getItem('messages')) || [];
       this.setState({
