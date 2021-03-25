@@ -11,6 +11,11 @@ export default class CustomActions extends React.Component {
     super();
   }
 
+  /**
+   * requests permission and allow to pick image from gallery and send url to  uploadImage and onSend
+   * @async
+   * @function pickImage
+   */
   //pick a photo(s) from your gallery
   pickImage = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -30,6 +35,11 @@ export default class CustomActions extends React.Component {
     }
   };
 
+  /**
+   * requests permission to access camera roll and stores photo then send url to uploadImage and onSend
+   * @async
+   * @function takePhoto
+   */
   //take a photo(s) using camera
   takePhoto = async () => {
     const { status } = await Permissions.askAsync(
@@ -53,6 +63,11 @@ export default class CustomActions extends React.Component {
     }
   };
 
+  /**
+   * requests permission to your location and send it to onSend
+   * @async
+   * @function getLocation
+   */
   //retrieve user's location or view user's current location
   getLocation = async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -74,6 +89,13 @@ export default class CustomActions extends React.Component {
     }
   };
 
+  /**
+   * uploading the image as blob to cloud storage
+   * @async
+   * @function uploadImage
+   * @param {string}
+   * @returns {string} imageURL
+   */
   // uploading image to the cloud
   uploadImage = async (uri) => {
     const blob = await new Promise((resolve, reject) => {
@@ -103,6 +125,11 @@ export default class CustomActions extends React.Component {
     return imageURL;
   };
 
+  /**
+   * (+) is clicked the actionSheet is called
+   * @function onActionPress
+   * @returns {actionSheet}
+   */
   onActionPress = () => {
     const options = [
       "Choose From Library",

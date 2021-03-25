@@ -1,6 +1,6 @@
-import React from "react";
-import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat'
-import { View, Platform, KeyboardAvoidingView, Text, StyleSheet, Image } from "react-native";
+import React from 'react';
+import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
+import { View, Platform, KeyboardAvoidingView, Text, StyleSheet, Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import CustomActions from './CustomActions';
@@ -94,6 +94,16 @@ export default class Chat extends React.Component {
     });
   }
 
+  /**
+   * update the state of the message 
+   * @function onCollectionUpdate
+   * @param {string} _id - message id
+   * @param {string} text - text message
+   * @param {date} cratedAt - date and time sent
+   * @param {string} user - user data
+   * @param {string} image
+   * @param {number} location - geographical coordinates
+   */
   onCollectionUpdate = (querySnapshot) => {
     const messages = [];
     // go through each document
@@ -118,6 +128,16 @@ export default class Chat extends React.Component {
     });
   };
 
+  /**
+   * Pushes messages to the Firestore database
+   * @function addMessages
+   * @param {string} _id - message id
+   * @param {string} text - text message
+   * @param {date} cratedAt - date and time of message
+   * @param {string} image
+   * @param {number} location - geographical coordinates
+   * @param {boolean} sent
+   */
   addMessages = () => {
     const message = this.state.messages[0];
     this.referenceMessages.add({
@@ -131,6 +151,12 @@ export default class Chat extends React.Component {
     });
   };
 
+  /**
+   * retrieves all messages from AsyncStorage
+   * @function getMessages
+   * @async
+   * return messages
+   */
   getMessages = async () => {
     const messages = [];
     try {
@@ -143,6 +169,12 @@ export default class Chat extends React.Component {
     }
   };
 
+  /**
+   * saves all messages to AsyncStorage
+   * @function saveMessages
+   * @async
+   * @returns {AsyncStorage} messages in asyncStorage
+   */
   saveMessages = async () => {
     try {
       await AsyncStorage.setItem('messages', JSON.stringify(this.state.messages));
@@ -151,6 +183,12 @@ export default class Chat extends React.Component {
     }
   };
 
+  /**
+   * Deletes messages from AsynStorage
+   * @function deleteMessages
+   * @async
+   * 
+   */
   deleteMessages = async () => {
     try {
       await AsyncStorage.removeItem('messages');
