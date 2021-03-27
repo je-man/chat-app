@@ -21,21 +21,26 @@ To set up Android Emulator, install [Android Studio](https://developer.android.c
 ### Set up Firebase
 
 To get started, visit [Google Firebase](https://firebase.google.com/) and sign in. Once signed in, Go to the console and click on "Create Project". After the project created, you need to create a database and select **start in test mode**. And from that you can now start creating your collections. In order to display you data from Firestore database in app, you need to click the **</>** or Firestore web button. Click "Register" to generate the configuration code. Which look like this:
-![config](../img/config.png)
+
+<!-- ![config](img/config.png) -->
+<img src="img/config.png" width="380" height="250">
 
 Copy the contents and integrate it into your "App.js" file.
 
 ## Dependencies
 
-![dependencies](img/dependencies.png)
+<!-- ![dependencies](img/dependencies.png) -->
+<img src="img/dependencies.png" width="400" height="300">
 
 ## Main Page
 
-![main page](img/first-page.png)
+<!-- ![main page](img/first-page.png) -->
+<img src="img/first-page.png" width="280" height="350">
 
 ## Chat Box Page
 
-![chat box](img/chat-box.png)
+<!-- ![chat box](img/chat-box.png) -->
+<img src="img/chat-box.png" width="280" height="350">
 
 ## Kanban
 
