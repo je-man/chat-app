@@ -27,15 +27,15 @@ Copy the contents and integrate it into your "App.js" file.
 
 ## Dependencies
 
-![dependencies](../img/dependencies.png)
+![dependencies](img/dependencies.png)
 
 ## Main Page
 
-![main page](../img/first-page.png)
+![main page](img/first-page.png)
 
 ## Chat Box Page
 
-![chat box](../img/chat-box.png)
+![chat box](img/chat-box.png)
 
 ## Kanban
 
